@@ -51,6 +51,11 @@ struct ToDoItem: Identifiable {
         try persistenceDelegate?.delete(item: managedObject)
     }
     
+    func toggleComplete() {
+        managedObject.isComplete.toggle()
+        save()
+    }
+
     static func fetchAll(persistenceDelegate: PersistenceDelegate = CoreDataStore.shared) -> [ToDoItem] {
         let managedObjects = persistenceDelegate.fetchAllItems(of: .ToDoItem) as! [ToDoItemManagedObject]
         return managedObjects.map { ToDoItem(managedObject: $0, persistenceDelegate: persistenceDelegate) }

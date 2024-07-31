@@ -18,8 +18,15 @@ struct ToDoListView: View {
                     HStack {
                         Text("\(item.name)")
                         Spacer()
-                        Image(systemName: "checkmark.circle.fill")
-                            .tint(.green)
+                        if item.isComplete {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                        } else {
+                            Image(systemName: "circle")
+                        }
+                    }
+                    .onTapGesture {
+                        viewModel.toggleTaskCompletion(item: item)
                     }
                 }
             }

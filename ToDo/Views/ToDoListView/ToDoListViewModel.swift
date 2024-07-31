@@ -32,7 +32,8 @@ final class ToDoListViewModel: ObservableObject {
         shouldDisplaySheet = true
     }
     
-    func toggleTaskCompletion() {
-        
+    func toggleTaskCompletion(item: ToDoItem) {
+        item.toggleComplete()
+        refreshItems()
     }
 }
