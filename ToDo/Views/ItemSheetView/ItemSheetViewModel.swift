@@ -6,3 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
+
+final class ItemSheetViewModel: ObservableObject {
+    
+    var toDoItem: ToDoItem
+    
+    init(toDoItem: ToDoItem) {
+        self.toDoItem = toDoItem
+    }
+    
+}

@@ -9,19 +9,38 @@ import SwiftUI
 
 struct ToDoListView: View {
 
+    @StateObject var viewModel = ToDoListViewModel()
+    
     var body: some View {
         NavigationView {
             List {
+                ForEach(viewModel.toDoItems) { item in
+                    HStack {
+                        Text("\(item.name)")
+                        Spacer()
+                        Image(systemName: "checkmark.circle.fill")
+                            .tint(.green)
+                    }
+                }
+            }
+            .navigationTitle("ToDos")
+            .sheet(item: $viewModel.displayItem) { item in
+                    ItemSheetView(viewModel: ItemSheetViewModel(toDoItem: item
+                    ))
             }
             .toolbar {
                 ToolbarItem {
-                    Button(action: { print("Hello World") },
+                    Button(action: { viewModel.addButtonTapped() },
                            label: {
                         Label("Add Item", systemImage: "plus")
                     })
                 }
             }
-            Text("Select an item")
+            .overlay {
+                if viewModel.toDoItems.isEmpty {
+                    ContentUnavailableView("No ToDos just yet", systemImage: "list.bullet.rectangle.portrait")
+                }
+            }
         }
     }
 }

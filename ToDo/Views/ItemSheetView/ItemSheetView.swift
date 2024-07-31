@@ -8,11 +8,34 @@
 import SwiftUI
 
 struct ItemSheetView: View {
+    
+    @ObservedObject var viewModel: ItemSheetViewModel
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            Form {
+                TextField("Item name", text: $viewModel.toDoItem.name)
+            }
+            .navigationTitle("Task")
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    Button("Cancel") {
+                        print("canceling")
+                    }
+                }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button("Save") {
+                        print("saveing")
+                    }
+                }
+            }
+        }
+        .interactiveDismissDisabled()
     }
 }
 
 #Preview {
-    ItemSheetView()
+    let mockTodo = ToDoItem(name: "no name", persistenceDelegate: nil)
+    let viewModel = ItemSheetViewModel(toDoItem: mockTodo)
+    return ItemSheetView(viewModel: viewModel)
 }
