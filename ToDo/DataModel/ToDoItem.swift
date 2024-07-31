@@ -51,8 +51,8 @@ struct ToDoItem: Identifiable {
         persistenceDelegate?.rollback()
     }
     
-    func delete() throws {
-        try persistenceDelegate?.delete(item: managedObject)
+    func delete() {
+        persistenceDelegate?.delete(item: managedObject)
     }
     
     func toggleComplete() {

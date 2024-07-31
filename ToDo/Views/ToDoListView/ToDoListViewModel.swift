@@ -41,4 +41,15 @@ final class ToDoListViewModel: ObservableObject {
         displayItem = item
         shouldDisplaySheet = true
     }
+    
+    func delete(itemAtIndextSet indexSet: IndexSet) {
+        guard let index = indexSet.first else {
+            refreshItems()
+            return
+        }
+        let item = toDoItems[index]
+        item.delete()
+        toDoItems.remove(atOffsets: indexSet)
+        refreshItems()
+    }
 }

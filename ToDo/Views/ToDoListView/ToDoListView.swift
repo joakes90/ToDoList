@@ -25,6 +25,7 @@ struct ToDoListView: View {
                             Image(systemName: "circle")
                         }
                     }
+                    .contentShape(Rectangle())
                     .onTapGesture {
                         viewModel.toggleTaskCompletion(item: item)
                     }
@@ -37,6 +38,9 @@ struct ToDoListView: View {
 
                     }))
                 }
+                .onDelete(perform: { indexSet in
+                    viewModel.delete(itemAtIndextSet: indexSet)
+                })
             }
             .navigationTitle("ToDos")
             .sheet(isPresented: $viewModel.shouldDisplaySheet,
