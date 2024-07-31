@@ -43,8 +43,8 @@ struct ToDoItem: Identifiable {
         self.managedObject.isComplete = false
     }
     
-    func save() throws {
-        try persistenceDelegate?.save()
+    func save() {
+        persistenceDelegate?.save()
     }
     
     func delete() throws {

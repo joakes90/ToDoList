@@ -24,14 +24,20 @@ final class CoreDataStore: PersistenceDelegate {
     
     private init() {}
     
-    func save() throws {
+    func save() {
         guard managedContext.hasChanges else { return }
-        try managedContext.save()
+        do {
+            try managedContext.save()
+        } catch {
+            // Would like to see about properly logging these errors and
+            // Possibly surfacing it in some way possibly as an alert
+            print("Failed to save context: \(error.localizedDescription)")
+        }
     }
     
     func delete(item: NSManagedObject) throws {
         managedContext.delete(item)
-        try save()
+        save()
     }
     
     func createManagedObject(for type: ManagedObjectType) -> NSManagedObject {
@@ -68,7 +74,7 @@ enum ManagedObjectType {
 }
 
 protocol PersistenceDelegate {
-    func save() throws
+    func save()
     func delete(item: NSManagedObject) throws
     func createManagedObject(for type: ManagedObjectType) -> NSManagedObject
     func fetchAllItems(of type: ManagedObjectType) -> [NSManagedObject]

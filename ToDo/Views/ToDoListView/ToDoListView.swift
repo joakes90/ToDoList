@@ -24,10 +24,15 @@ struct ToDoListView: View {
                 }
             }
             .navigationTitle("ToDos")
-            .sheet(item: $viewModel.displayItem) { item in
-                    ItemSheetView(viewModel: ItemSheetViewModel(toDoItem: item
-                    ))
-            }
+            .sheet(isPresented: $viewModel.shouldDisplaySheet,
+                   onDismiss: {
+                viewModel.refreshItems()
+            }, content: {
+                if let item = viewModel.displayItem {
+                    ItemSheetView(viewModel: ItemSheetViewModel(toDoItem: item, shouldDisplaySheet: $viewModel.shouldDisplaySheet
+                                        ))
+                }
+            })
             .toolbar {
                 ToolbarItem {
                     Button(action: { viewModel.addButtonTapped() },

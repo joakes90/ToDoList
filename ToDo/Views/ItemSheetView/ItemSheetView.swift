@@ -20,12 +20,12 @@ struct ItemSheetView: View {
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button("Cancel") {
-                        print("canceling")
+                        viewModel.dismiss()
                     }
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Save") {
-                        print("saveing")
+                        viewModel.saveToDoItem()
                     }
                 }
             }
@@ -36,6 +36,6 @@ struct ItemSheetView: View {
 
 #Preview {
     let mockTodo = ToDoItem(name: "no name", persistenceDelegate: nil)
-    let viewModel = ItemSheetViewModel(toDoItem: mockTodo)
+    let viewModel = ItemSheetViewModel(toDoItem: mockTodo, shouldDisplaySheet: .constant(true))
     return ItemSheetView(viewModel: viewModel)
 }

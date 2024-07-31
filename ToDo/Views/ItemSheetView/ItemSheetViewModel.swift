@@ -11,9 +11,20 @@ import SwiftUI
 final class ItemSheetViewModel: ObservableObject {
     
     var toDoItem: ToDoItem
+    @Binding var shouldDisplaySheet: Bool
     
-    init(toDoItem: ToDoItem) {
+    init(toDoItem: ToDoItem,
+         shouldDisplaySheet: Binding<Bool>) {
         self.toDoItem = toDoItem
+        self._shouldDisplaySheet = shouldDisplaySheet
     }
     
+    func saveToDoItem() {
+        toDoItem.save()
+        dismiss()
+    }
+    
+    func dismiss() {
+        shouldDisplaySheet = false
+    }
 }

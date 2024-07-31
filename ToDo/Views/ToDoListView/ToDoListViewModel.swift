@@ -10,16 +10,29 @@ import Foundation
 final class ToDoListViewModel: ObservableObject {
     
     @Published var toDoItems = [ToDoItem]()
-    @Published var displayItem: ToDoItem?
-    @Published var sheet = false
+    @Published var shouldDisplaySheet = false
+    var displayItem: ToDoItem?
     
     let persistenceDelegate: PersistenceDelegate
     
     init(persistenceDelegate: PersistenceDelegate = CoreDataStore.shared) {
         self.persistenceDelegate = persistenceDelegate
+        refreshItems()
     }
     
+    func refreshItems() {
+        toDoItems = persistenceDelegate.fetchAllItems(of: .ToDoItem)
+        .compactMap { $0 as? ToDoItemManagedObject }
+        .map { $0.toDoItem }
+        .sorted(by: { $0.createdDate < $1.createdDate })
+    }
+
     func addButtonTapped() {
         displayItem = ToDoItem()
+        shouldDisplaySheet = true
+    }
+    
+    func toggleTaskCompletion() {
+        
     }
 }
