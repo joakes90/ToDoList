@@ -8,69 +8,68 @@
 import Foundation
 import CoreData
 
-final class CoreDataStore {
+final class CoreDataStore: PersistenceDelegate {
 
     static let shared = CoreDataStore()
     
-    private lazy var persistantContainer: NSPersistentContainer = {
-        
-        let container = NSPersistentContainer(name: "ToDoItems")
-        
+    private lazy var managedContext: NSManagedObjectContext = {
+        let container = NSPersistentContainer(name: "ToDoList")
         container.loadPersistentStores { _, error in
-            if let error {
-                // This might be good to surface up to some form of remote logging. Crashlytics maybe?
-                //and then possibly fall back to attempting to creating a new store and repopulatoing the data if it's available elsewhere.
+            if let error = error {
                 fatalError("Failed to load persistent stores: \(error.localizedDescription)")
             }
         }
-        return container
+        return container.viewContext
     }()
     
     private init() {}
-}
-
-extension CoreDataStore: PersistanceDelegate {
     
-    func save()  throws {
-        guard persistantContainer.viewContext.hasChanges else { return }
-        try persistantContainer.viewContext.save()
+    func save() throws {
+        guard managedContext.hasChanges else { return }
+        try managedContext.save()
     }
     
     func delete(item: NSManagedObject) throws {
-        persistantContainer.viewContext.delete(item)
+        managedContext.delete(item)
         try save()
     }
     
-    func createManagedObject(type: ManagedObjectType) -> NSManagedObject {
-        // This could be expanded to cover multipul entity types
-        var entity: NSEntityDescription
+    func createManagedObject(for type: ManagedObjectType) -> NSManagedObject {
+        let entityName: String
         switch type {
         case .ToDoItem:
-            entity = NSEntityDescription.entity(forEntityName: "ToDoItemManagedObject"
-                                                , in: persistantContainer.viewContext)!
+            entityName = "ToDoItemManagedObject"
         }
-        return NSManagedObject(entity: entity, insertInto: persistantContainer.viewContext)
+        
+        let entity = NSEntityDescription.entity(forEntityName: entityName, in: managedContext)!
+        return NSManagedObject(entity: entity, insertInto: managedContext)
     }
     
-    func readAllRecords() {
+    func fetchAllItems(of type: ManagedObjectType) -> [NSManagedObject] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
+        do {
+            return try managedContext.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch items: \(error.localizedDescription)")
+            return []
+        }
     }
 }
 
 enum ManagedObjectType {
     case ToDoItem
+    
+    var entityName: String {
+        switch self {
+        case .ToDoItem:
+            return "ToDoItemManagedObject"
+        }
+    }
 }
 
-protocol ManagedObjectRepresentable {
-    // In theory this could be genericised better to be adopted by ant NSManagedObject subclass
-    // not just ToDoItemManagedObject
-    var managedObject: ToDoItemManagedObject { get }
-    var persistanceDelegate: PersistanceDelegate { get }
-    func update() throws
-    func delete() throws
-}
-
-protocol PersistanceDelegate {
+protocol PersistenceDelegate {
     func save() throws
     func delete(item: NSManagedObject) throws
-    func createManagedObject(type: ManagedObjectType) -> NSManagedObject
+    func createManagedObject(for type: ManagedObjectType) -> NSManagedObject
+    func fetchAllItems(of type: ManagedObjectType) -> [NSManagedObject]
 }

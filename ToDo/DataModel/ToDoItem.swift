@@ -7,40 +7,52 @@
 
 import Foundation
 
-struct ToDoItem: ManagedObjectRepresentable {
+struct ToDoItem: Identifiable {
     
-    var managedObject: ToDoItemManagedObject
-    var persistanceDelegate: any PersistanceDelegate
+    private var managedObject: ToDoItemManagedObject
+    private var persistenceDelegate: PersistenceDelegate?
 
-    var name: String
-    var isComplete: Bool
-    let createdDate: Date
+    var id: UUID {
+        managedObject.id ?? UUID()
+    }
+
+    var name: String {
+        get { managedObject.name ?? "Unnamed" }
+        set { managedObject.name = newValue }
+    }
     
-    init(managedObject: ToDoItemManagedObject,
-         persistanceDelegate: PersistanceDelegate = CoreDataStore.shared) {
+    var isComplete: Bool {
+        get { managedObject.isComplete }
+        set { managedObject.isComplete = newValue }
+    }
+    
+    var createdDate: Date {
+        managedObject.createdDate ?? Date()
+    }
+    
+    init(managedObject: ToDoItemManagedObject, persistenceDelegate: PersistenceDelegate? = CoreDataStore.shared) {
         self.managedObject = managedObject
-        self.persistanceDelegate = persistanceDelegate
-        self.name = managedObject.name ?? "Unnamed"
-        self.isComplete = managedObject.isComplete
-        self.createdDate = managedObject.createdDate ?? Date()
+        self.persistenceDelegate = persistenceDelegate
     }
     
-    init(name: String,
-         persistanceDelegate: PersistanceDelegate = CoreDataStore.shared) {
-        self.name = name
-        self.createdDate = Date()
-        self.isComplete = false
-        self.managedObject = persistanceDelegate.createManagedObject(type: .ToDoItem) as! ToDoItemManagedObject
-        self.persistanceDelegate = persistanceDelegate
+    init(name: String = "Unnamed", persistenceDelegate: PersistenceDelegate? = CoreDataStore.shared) {
+        self.persistenceDelegate = persistenceDelegate
+        self.managedObject = persistenceDelegate?.createManagedObject(for: .ToDoItem) as! ToDoItemManagedObject
+        self.managedObject.name = name
+        self.managedObject.createdDate = Date()
+        self.managedObject.isComplete = false
     }
     
-    func update() throws {
-        managedObject.isComplete = isComplete
-        managedObject.name = name
-        try persistanceDelegate.save()
+    func save() throws {
+        try persistenceDelegate?.save()
     }
     
     func delete() throws {
-        try persistanceDelegate.delete(item: managedObject)
+        try persistenceDelegate?.delete(item: managedObject)
+    }
+    
+    static func fetchAll(persistenceDelegate: PersistenceDelegate = CoreDataStore.shared) -> [ToDoItem] {
+        let managedObjects = persistenceDelegate.fetchAllItems(of: .ToDoItem) as! [ToDoItemManagedObject]
+        return managedObjects.map { ToDoItem(managedObject: $0, persistenceDelegate: persistenceDelegate) }
     }
 }

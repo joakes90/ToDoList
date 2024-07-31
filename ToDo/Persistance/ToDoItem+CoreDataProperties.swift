@@ -19,7 +19,7 @@ extension ToDoItemManagedObject {
     @NSManaged public var name: String?
     @NSManaged public var isComplete: Bool
     @NSManaged public var createdDate: Date?
-
+    @NSManaged public var id: UUID?
 }
 
 extension ToDoItemManagedObject : Identifiable {

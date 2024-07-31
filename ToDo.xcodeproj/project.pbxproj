@@ -19,6 +19,9 @@
 		D0AE61D52C5A7F40004F5B11 /* ToDoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE61D32C5A7F40004F5B11 /* ToDoItem+CoreDataProperties.swift */; };
 		D0AE61D82C5A80BB004F5B11 /* ToDoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0AE61D62C5A80BB004F5B11 /* ToDoList.xcdatamodeld */; };
 		D0AE61DB2C5A8795004F5B11 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE61DA2C5A8795004F5B11 /* ToDoItem.swift */; };
+		D0E9F2D92C5A9C41004EA7E6 /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E9F2D82C5A9C41004EA7E6 /* ToDoListViewModel.swift */; };
+		D0E9F2DD2C5AB819004EA7E6 /* ItemSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E9F2DC2C5AB819004EA7E6 /* ItemSheetView.swift */; };
+		D0E9F2DF2C5ABD9E004EA7E6 /* ItemSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E9F2DE2C5ABD9E004EA7E6 /* ItemSheetViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,9 @@
 		D0AE61D32C5A7F40004F5B11 /* ToDoItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDoItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D0AE61D72C5A80BB004F5B11 /* ToDoList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDoList.xcdatamodel; sourceTree = "<group>"; };
 		D0AE61DA2C5A8795004F5B11 /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
+		D0E9F2D82C5A9C41004EA7E6 /* ToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
+		D0E9F2DC2C5AB819004EA7E6 /* ItemSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSheetView.swift; sourceTree = "<group>"; };
+		D0E9F2DE2C5ABD9E004EA7E6 /* ItemSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSheetViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,7 +148,8 @@
 		D0AE61B72C5A71A8004F5B11 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D0AE618A2C5A714E004F5B11 /* ToDoListView.swift */,
+				D0E9F2DA2C5AB0F7004EA7E6 /* ToDoListView */,
+				D0E9F2DB2C5AB7E5004EA7E6 /* ItemSheetView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,6 +171,24 @@
 				D0AE61DA2C5A8795004F5B11 /* ToDoItem.swift */,
 			);
 			path = DataModel;
+			sourceTree = "<group>";
+		};
+		D0E9F2DA2C5AB0F7004EA7E6 /* ToDoListView */ = {
+			isa = PBXGroup;
+			children = (
+				D0AE618A2C5A714E004F5B11 /* ToDoListView.swift */,
+				D0E9F2D82C5A9C41004EA7E6 /* ToDoListViewModel.swift */,
+			);
+			path = ToDoListView;
+			sourceTree = "<group>";
+		};
+		D0E9F2DB2C5AB7E5004EA7E6 /* ItemSheetView */ = {
+			isa = PBXGroup;
+			children = (
+				D0E9F2DC2C5AB819004EA7E6 /* ItemSheetView.swift */,
+				D0E9F2DE2C5ABD9E004EA7E6 /* ItemSheetViewModel.swift */,
+			);
+			path = ItemSheetView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,9 +321,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0E9F2D92C5A9C41004EA7E6 /* ToDoListViewModel.swift in Sources */,
 				D0AE61BA2C5A720F004F5B11 /* CoreDataStore.swift in Sources */,
 				D0AE61D82C5A80BB004F5B11 /* ToDoList.xcdatamodeld in Sources */,
 				D0AE61DB2C5A8795004F5B11 /* ToDoItem.swift in Sources */,
+				D0E9F2DD2C5AB819004EA7E6 /* ItemSheetView.swift in Sources */,
+				D0E9F2DF2C5ABD9E004EA7E6 /* ItemSheetViewModel.swift in Sources */,
 				D0AE618B2C5A714E004F5B11 /* ToDoListView.swift in Sources */,
 				D0AE61892C5A714E004F5B11 /* ToDoApp.swift in Sources */,
 				D0AE61D42C5A7F40004F5B11 /* ToDoItem+CoreDataClass.swift in Sources */,
