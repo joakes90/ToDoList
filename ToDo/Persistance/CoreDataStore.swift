@@ -35,6 +35,10 @@ final class CoreDataStore: PersistenceDelegate {
         }
     }
     
+    func rollback() {
+        managedContext.rollback()
+    }
+    
     func delete(item: NSManagedObject) throws {
         managedContext.delete(item)
         save()
@@ -75,6 +79,7 @@ enum ManagedObjectType {
 
 protocol PersistenceDelegate {
     func save()
+    func rollback()
     func delete(item: NSManagedObject) throws
     func createManagedObject(for type: ManagedObjectType) -> NSManagedObject
     func fetchAllItems(of type: ManagedObjectType) -> [NSManagedObject]

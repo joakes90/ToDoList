@@ -25,6 +25,7 @@ final class ItemSheetViewModel: ObservableObject {
     }
     
     func dismiss() {
+        toDoItem.rollback()
         shouldDisplaySheet = false
     }
 }

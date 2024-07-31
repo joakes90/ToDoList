@@ -28,6 +28,14 @@ struct ToDoListView: View {
                     .onTapGesture {
                         viewModel.toggleTaskCompletion(item: item)
                     }
+                    .contextMenu(ContextMenu(menuItems: {
+                        Button {
+                            viewModel.renameItem(item: item)
+                        } label: {
+                            Text("Rename")
+                        }
+
+                    }))
                 }
             }
             .navigationTitle("ToDos")

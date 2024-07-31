@@ -47,6 +47,10 @@ struct ToDoItem: Identifiable {
         persistenceDelegate?.save()
     }
     
+    func rollback() {
+        persistenceDelegate?.rollback()
+    }
+    
     func delete() throws {
         try persistenceDelegate?.delete(item: managedObject)
     }

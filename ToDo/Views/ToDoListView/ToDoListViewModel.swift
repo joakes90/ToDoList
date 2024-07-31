@@ -36,4 +36,9 @@ final class ToDoListViewModel: ObservableObject {
         item.toggleComplete()
         refreshItems()
     }
+    
+    func renameItem(item: ToDoItem) {
+        displayItem = item
+        shouldDisplaySheet = true
+    }
 }
