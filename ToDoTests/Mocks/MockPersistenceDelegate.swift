@@ -13,6 +13,10 @@ class MockPersistenceDelegate: PersistenceDelegate {
     
     var items: [ToDoItemManagedObject] = []
     let context: NSManagedObjectContext
+
+    var saveCalled = false
+    var rollbackCalled = false
+    var deleteCalled = false
     
     init(context: NSManagedObjectContext) {
             self.context = context
@@ -23,11 +27,17 @@ class MockPersistenceDelegate: PersistenceDelegate {
         return items
     }
 
-    func save() {}
-    
-    func rollback() {}
-    
-    func delete(item: NSManagedObject) {}
+    func save() {
+         saveCalled = true
+     }
+
+     func rollback() {
+         rollbackCalled = true
+     }
+
+     func delete(item: NSManagedObject) {
+         deleteCalled = true
+     }
     
     func createManagedObject(for type: ToDo.ManagedObjectType) -> NSManagedObject {
         let entity = NSEntityDescription.entity(forEntityName: "ToDoItemManagedObject", in: context)!
