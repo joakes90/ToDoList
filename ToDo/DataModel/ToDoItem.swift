@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ToDoItem: Identifiable {
+class ToDoItem: Identifiable {
     
     private var managedObject: ToDoItemManagedObject
     private var persistenceDelegate: PersistenceDelegate?

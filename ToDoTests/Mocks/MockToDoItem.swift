@@ -6,3 +6,17 @@
 //
 
 import Foundation
+@testable import ToDo
+
+class MockToDoItem: ToDoItem {
+    var saveCalled = false
+    var rollbackCalled = false
+
+    override func save() {
+        saveCalled = true
+    }
+
+    override func rollback() {
+        rollbackCalled = true
+    }
+}
