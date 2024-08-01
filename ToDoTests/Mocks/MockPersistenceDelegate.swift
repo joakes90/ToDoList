@@ -10,14 +10,14 @@ import Foundation
 @testable import ToDo
 
 class MockPersistenceDelegate: PersistenceDelegate {
-    
+
     var items: [ToDoItemManagedObject] = []
     let context: NSManagedObjectContext
 
     var saveCalled = false
     var rollbackCalled = false
     var deleteCalled = false
-    
+
     init(context: NSManagedObjectContext) {
             self.context = context
             populate(numberOfItems: 3)
@@ -38,7 +38,7 @@ class MockPersistenceDelegate: PersistenceDelegate {
      func delete(item: NSManagedObject) {
          deleteCalled = true
      }
-    
+
     func createManagedObject(for type: ToDo.ManagedObjectType) -> NSManagedObject {
         let entity = NSEntityDescription.entity(forEntityName: "ToDoItemManagedObject", in: context)!
                 let toDoItem = ToDoItemManagedObject(entity: entity, insertInto: context)
@@ -46,7 +46,7 @@ class MockPersistenceDelegate: PersistenceDelegate {
                 // Set other properties as needed
         return toDoItem
     }
-    
+
     func populate(numberOfItems count: Int) {
         for i in 0..<count {
             let name = "Item \(i)"
@@ -55,7 +55,7 @@ class MockPersistenceDelegate: PersistenceDelegate {
             items.append(item)
         }
     }
-    
+
     func addItem(withName name: String) {
         let item = createManagedObject(for: .ToDoItem) as! ToDoItemManagedObject
         item.name = name

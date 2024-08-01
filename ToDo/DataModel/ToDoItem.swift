@@ -8,7 +8,7 @@
 import Foundation
 
 class ToDoItem: Identifiable {
-    
+
     private var managedObject: ToDoItemManagedObject
     private var persistenceDelegate: PersistenceDelegate?
 
@@ -20,21 +20,21 @@ class ToDoItem: Identifiable {
         get { managedObject.name ?? "Unnamed" }
         set { managedObject.name = newValue }
     }
-    
+
     var isComplete: Bool {
         get { managedObject.isComplete }
         set { managedObject.isComplete = newValue }
     }
-    
+
     var createdDate: Date {
         managedObject.createdDate ?? Date()
     }
-    
+
     init(managedObject: ToDoItemManagedObject, persistenceDelegate: PersistenceDelegate? = CoreDataStore.shared) {
         self.managedObject = managedObject
         self.persistenceDelegate = persistenceDelegate
     }
-    
+
     init(name: String = "Unnamed", persistenceDelegate: PersistenceDelegate? = CoreDataStore.shared) {
         self.persistenceDelegate = persistenceDelegate
         self.managedObject = persistenceDelegate?.createManagedObject(for: .ToDoItem) as! ToDoItemManagedObject
@@ -42,19 +42,19 @@ class ToDoItem: Identifiable {
         self.managedObject.createdDate = Date()
         self.managedObject.isComplete = false
     }
-    
+
     func save() {
         persistenceDelegate?.save()
     }
-    
+
     func rollback() {
         persistenceDelegate?.rollback()
     }
-    
+
     func delete() {
         persistenceDelegate?.delete(item: managedObject)
     }
-    
+
     func toggleComplete() {
         managedObject.isComplete.toggle()
         save()

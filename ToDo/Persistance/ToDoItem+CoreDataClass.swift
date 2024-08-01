@@ -9,9 +9,8 @@
 import Foundation
 import CoreData
 
-
 public class ToDoItemManagedObject: NSManagedObject {
-    
+
     var toDoItem: ToDoItem {
         ToDoItem(managedObject: self)
     }

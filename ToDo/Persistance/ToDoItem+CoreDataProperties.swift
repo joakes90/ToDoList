@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension ToDoItemManagedObject {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ToDoItemManagedObject> {
@@ -22,6 +21,6 @@ extension ToDoItemManagedObject {
     @NSManaged public var id: UUID?
 }
 
-extension ToDoItemManagedObject : Identifiable {
+extension ToDoItemManagedObject: Identifiable {
 
 }

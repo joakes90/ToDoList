@@ -11,7 +11,7 @@ import CoreData
 final class CoreDataStore: PersistenceDelegate {
 
     static let shared = CoreDataStore()
-    
+
     private lazy var managedContext: NSManagedObjectContext = {
         let container = NSPersistentContainer(name: "ToDoList")
         container.loadPersistentStores { _, error in
@@ -21,9 +21,9 @@ final class CoreDataStore: PersistenceDelegate {
         }
         return container.viewContext
     }()
-    
+
     private init() {}
-    
+
     func save() {
         guard managedContext.hasChanges else { return }
         do {
@@ -34,27 +34,27 @@ final class CoreDataStore: PersistenceDelegate {
             print("Failed to save context: \(error.localizedDescription)")
         }
     }
-    
+
     func rollback() {
         managedContext.rollback()
     }
-    
+
     func delete(item: NSManagedObject) {
         managedContext.delete(item)
         save()
     }
-    
+
     func createManagedObject(for type: ManagedObjectType) -> NSManagedObject {
         let entityName: String
         switch type {
         case .ToDoItem:
             entityName = "ToDoItemManagedObject"
         }
-        
+
         let entity = NSEntityDescription.entity(forEntityName: entityName, in: managedContext)!
         return NSManagedObject(entity: entity, insertInto: managedContext)
     }
-    
+
     func fetchAllItems(of type: ManagedObjectType) -> [NSManagedObject] {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: type.entityName)
         do {
@@ -68,7 +68,7 @@ final class CoreDataStore: PersistenceDelegate {
 
 enum ManagedObjectType {
     case ToDoItem
-    
+
     var entityName: String {
         switch self {
         case .ToDoItem:

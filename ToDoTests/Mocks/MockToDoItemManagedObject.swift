@@ -13,22 +13,22 @@ class MockToDoItemManagedObject: ToDoItemManagedObject {
     var mockName: String?
     var mockIsComplete: Bool = false
     var mockCreatedDate: Date?
-    
+
     override var id: UUID? {
         get { return mockID }
         set { mockID = newValue }
     }
-    
+
     override var name: String? {
         get { return mockName }
         set { mockName = newValue }
     }
-    
+
     override var isComplete: Bool {
         get { return mockIsComplete }
         set { mockIsComplete = newValue }
     }
-    
+
     override var createdDate: Date? {
         get { return mockCreatedDate }
         set { mockCreatedDate = newValue }

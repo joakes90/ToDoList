@@ -14,7 +14,7 @@ final class ItemSheetViewModelTests: XCTestCase {
     var viewModel: ItemSheetViewModel!
     var mockToDoItem: MockToDoItem!
     @State var shouldDisplaySheet = false
-    
+
     override func setUp() {
         super.setUp()
                 super.setUp()
@@ -28,26 +28,25 @@ final class ItemSheetViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-
     func testSaveToDoItem_callsSaveAndDismiss() {
             // Given
             shouldDisplaySheet = true
-            
+
             // When
             viewModel.saveToDoItem()
-            
+
             // Then
             XCTAssertTrue(mockToDoItem.saveCalled)
             XCTAssertFalse(shouldDisplaySheet)
         }
-        
+
         func testDismiss_callsRollbackAndSetsShouldDisplaySheetToFalse() {
             // Given
             shouldDisplaySheet = true
-            
+
             // When
             viewModel.dismiss()
-            
+
             // Then
             XCTAssertTrue(mockToDoItem.rollbackCalled)
             XCTAssertFalse(shouldDisplaySheet)

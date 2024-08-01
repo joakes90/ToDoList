@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ItemSheetView: View {
-    
+
     @ObservedObject var viewModel: ItemSheetViewModel
 
     var body: some View {

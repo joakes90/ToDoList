@@ -8,18 +8,18 @@
 import Foundation
 
 final class ToDoListViewModel: ObservableObject {
-    
+
     @Published var toDoItems = [ToDoItem]()
     @Published var shouldDisplaySheet = false
     var displayItem: ToDoItem?
-    
+
     let persistenceDelegate: PersistenceDelegate
-    
+
     init(persistenceDelegate: PersistenceDelegate = CoreDataStore.shared) {
         self.persistenceDelegate = persistenceDelegate
         refreshItems()
     }
-    
+
     func refreshItems() {
         toDoItems = persistenceDelegate.fetchAllItems(of: .ToDoItem)
         .compactMap { $0 as? ToDoItemManagedObject }
@@ -31,17 +31,17 @@ final class ToDoListViewModel: ObservableObject {
         displayItem = ToDoItem()
         shouldDisplaySheet = true
     }
-    
+
     func toggleTaskCompletion(item: ToDoItem) {
         item.toggleComplete()
         refreshItems()
     }
-    
+
     func renameItem(item: ToDoItem) {
         displayItem = item
         shouldDisplaySheet = true
     }
-    
+
     func delete(itemAtIndextSet indexSet: IndexSet) {
         guard let index = indexSet.first else {
             refreshItems()
