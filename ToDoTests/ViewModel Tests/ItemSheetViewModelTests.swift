@@ -1,14 +1,13 @@
 //
-//  ToDoTests.swift
+//  ItemSheetViewModelTests.swift
 //  ToDoTests
 //
-//  Created by Justin Oakes on 7/31/24.
+//  Created by Justin Oakes on 8/1/24.
 //
 
 import XCTest
-@testable import ToDo
 
-final class ToDoTests: XCTestCase {
+final class ItemSheetViewModelTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
